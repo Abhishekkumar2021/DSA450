@@ -45,7 +45,7 @@ public:
                 min_price = prices[i];
             }
             else if(prices[i]-min_price>max_profit){
-                max_profit = prices[i]-min_price;
+                max_profit = prices[i]-min_price; 
             }
         }
         return max_profit;
