@@ -65,3 +65,55 @@ string longestPalin (string s) {
     }
     return s.substr(start, end - start + 1);
 }
+
+int longestPalinUsingRecursion(string s, int l, int r, int &start, int &end){
+    if(l > r) return 0;
+    if(l == r) return 1;
+    if(s[l] == s[r] && l + 1 == r){
+        start = l;
+        end = r;
+        return 2;
+    }
+    if(s[l] == s[r]){
+        int ans = longestPalinUsingRecursion(s, l + 1, r - 1, start, end);
+        if(ans){
+            start = l;
+            end = r;
+            return ans + 2;
+        }
+    }
+    int ans1 = longestPalinUsingRecursion(s, l + 1, r, start, end);
+    int ans2 = longestPalinUsingRecursion(s, l, r - 1, start, end);
+    if(ans1 > ans2){
+        start = l + 1;
+        end = r;
+        return ans1;
+    }
+    else{
+        start = l;
+        end = r - 1;
+        return ans2;
+    }
+}
+
+int getPalinUsingDP(string s, int n, int &start, int &end){
+    int dp[n][n];
+    memset(dp, 0, sizeof(dp));
+    for(int i = 0; i < n; i++) dp[i][i] = 1;
+    for(int k = 2; k <= n; k++){
+        for(int i = 0; i < n - k + 1; i++){
+            int j = i + k - 1;
+            if(s[i] == s[j] && k == 2){
+                dp[i][j] = 2;
+                start = i;
+                end = j;
+            }
+            else if(s[i] == s[j] && dp[i + 1][j - 1]){
+                dp[i][j] = 2 + dp[i + 1][j - 1];
+                start = i;
+                end = j;
+            }
+        }
+    }
+    return end - start + 1;
+}
