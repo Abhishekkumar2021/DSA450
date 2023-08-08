@@ -37,25 +37,21 @@ int getMinJumps(int arr[], int n){
         return 0;
     if(arr[0]==0)
         return -1;
-    int jumps = 0; // number of jumps
-    int maxReach = arr[0]; // max reach of current jump
-    int steps = arr[0]; // steps left in current jump
-    for(int i = 1; i < n; i++){
-        if(i == n - 1){
+    int jumps = 0; 
+    int maxReach = arr[0]; 
+    int currReach = arr[0];
+
+    for(int i=0; i<n-1; i++){
+        maxReach = max(maxReach, i+arr[i]);
+        if(currReach==i){
             jumps++;
-            break;
+            currReach = maxReach;
         }
-        maxReach = max(maxReach, i + arr[i]);
-        steps--;
-        if(steps == 0){
-            jumps++;
-            if(i >= maxReach){
-                return -1;
-            }
-            steps = maxReach - i;
-        }
-    }
-    return jumps;
+    } 
+    if(maxReach < n-1) 
+        return -1;
+    return jumps+1;
+    
 }
 
 int main(){
