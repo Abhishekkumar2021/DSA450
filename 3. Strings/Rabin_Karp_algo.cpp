@@ -58,8 +58,8 @@ void searchNaive(string pat, string txt){
 }
 
 void searchRabinKarp(string pat, string txt){
-    int m = pat.length();
     int n = txt.length();
+    int m = pat.length();
     int p = 0; // hash value for pattern
     int t = 0; // hash value for txt
     int h = 1;
@@ -82,9 +82,7 @@ void searchRabinKarp(string pat, string txt){
                 cout<<"Pattern found at index "<<i<<endl;
         }
         if(i<n-m){
-            t = (d*(t - txt[i]*h) + txt[i+m])%q;
-            if(t<0)
-                t = t+q;
+            t = (d*(t - txt[i]*h) + txt[i+m] + q)%q;
         }
     }
 }
